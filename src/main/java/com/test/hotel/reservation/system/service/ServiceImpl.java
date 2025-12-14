@@ -4,18 +4,20 @@ import com.test.hotel.reservation.system.entities.Room;
 import com.test.hotel.reservation.system.entities.RoomType;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ServiceImpl implements Service{
 
-    private final List<Room> rooms = new ArrayList<>();
+    private final Map<Integer, Room> rooms = new HashMap<>();
     @Override
     public void setRoom(int roomNumber, RoomType roomType, int roomPricePerNight) {
         if (roomNumber <= 0) throw new IllegalArgumentException("Room number must be > 0");
         if (roomPricePerNight <= 0) throw new IllegalArgumentException("RoomPricePerNight must be > 0");
-        rooms.add(new Room(roomNumber, roomType, roomPricePerNight));
-
+        if(rooms.containsKey(roomNumber)) {
+            return;
+        }
+        rooms.put(roomNumber, new Room(roomNumber, roomType, roomPricePerNight));
     }
 
     @Override
@@ -38,7 +40,7 @@ public class ServiceImpl implements Service{
 
     }
 
-    public List<Room> getRooms() {
+    public Map<Integer, Room> getRooms() {
         return rooms;
     }
 }

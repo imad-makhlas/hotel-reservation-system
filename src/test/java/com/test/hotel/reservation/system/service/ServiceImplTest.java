@@ -16,8 +16,8 @@ public class ServiceImplTest {
     public void shouldTestSetRoom(){
         service.setRoom(1, RoomType.STANDARD, 1000);
         service.setRoom(2, RoomType.JUNIOR, 2000);
-        service.setRoom(3, RoomType.MASTER, 3000);
-        Assertions.assertThat(service.getRooms().size()).isEqualTo(3);
-
+        service.setRoom(1, RoomType.MASTER, 3000);
+        Assertions.assertThat(service.getRooms().size()).isEqualTo(2);
+        Assertions.assertThat(service.getRooms().get(1).pricePerNight()).isEqualTo(1000);
     }
 }
