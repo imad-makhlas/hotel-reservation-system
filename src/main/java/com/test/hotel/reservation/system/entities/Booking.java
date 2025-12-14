@@ -4,16 +4,11 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
 public record Booking(
-        Room room,
-        User user,
+        int roomNumber,
+        RoomType roomType,
+        int pricePerNight,
+        int userId,
         LocalDate startDate,
         LocalDate endDate
 ) {
-    public int periodInDays(){
-        return (int) ChronoUnit.DAYS.between(startDate, endDate);
-    }
-
-    public int total(){
-        return periodInDays()* room().pricePerNight();
-    }
 }
