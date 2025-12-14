@@ -64,7 +64,14 @@ public class ServiceImpl implements Service{
 
     @Override
     public void printAll() {
-
+        System.out.println("Rooms : ");
+        for (Room room : rooms.values()) {
+            System.out.println(room);
+        }
+        System.out.println("Bookings");
+        for (Booking b: bookings) {
+            System.out.println(b);
+        }
     }
 
     @Override
@@ -80,6 +87,9 @@ public class ServiceImpl implements Service{
 
     @Override
     public void printAllUsers() {
-
+        System.out.println("Users");
+        for (User user : users.values()) {
+            System.out.println(user);
+        }
     }
 }
