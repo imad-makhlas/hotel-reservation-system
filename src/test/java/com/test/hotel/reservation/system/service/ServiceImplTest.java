@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class ServiceImplTest {
@@ -101,5 +102,70 @@ public class ServiceImplTest {
         );
 
         Assertions.assertThat(service.bookings.size()).isEqualTo(0);
+    }
+
+    @Test
+    void should_print_result_for_given_scenario() {
+
+        // User 1 tries booking Room 2 from 30/06/2026 to 07/07/2026
+        assertThrows(IllegalStateException.class, () ->
+                service.bookRoom(
+                        1,
+                        2,
+                        LocalDate.of(2026, 6, 30),
+                        LocalDate.of(2026, 7, 7)
+                )
+        );
+
+        // User 1 tries booking Room 2 from 07/07/2026 to 30/06/2026
+        assertThrows(IllegalArgumentException.class, () ->
+                service.bookRoom(
+                        1,
+                        2,
+                        LocalDate.of(2026, 7, 7),
+                        LocalDate.of(2026, 6, 30)
+                )
+        );
+
+        // User 1 tries booking Room 1 from 07/07/2026 to 08/07/2026
+        assertDoesNotThrow(() ->
+                service.bookRoom(
+                        1,
+                        1,
+                        LocalDate.of(2026, 7, 7),
+                        LocalDate.of(2026, 7, 8)
+                )
+        );
+
+        // User 2 tries booking Room 1 from 07/07/2026 to 09/07/2026
+        assertThrows(IllegalStateException.class, () ->
+                service.bookRoom(
+                        2,
+                        1,
+                        LocalDate.of(2026, 7, 7),
+                        LocalDate.of(2026, 7, 9)
+                )
+        );
+
+        // User 2 tries booking Room 3 from 07/07/2026 to 08/07/2026
+        assertDoesNotThrow(() ->
+                service.bookRoom(
+                        2,
+                        3,
+                        LocalDate.of(2026, 7, 7),
+                        LocalDate.of(2026, 7, 8)
+                )
+        );
+
+        service.setRoom(1, RoomType.MASTER, 10000);
+
+        service.printAll();
+
+        service.printAllUsers();
+
+        Assertions.assertThat( service.bookings.size()).isEqualTo(2);
+
+        Assertions.assertThat(service.users.get(1).balance()).isEqualTo(4000);
+        Assertions.assertThat(service.users.get(2).balance()).isEqualTo(7000);
     }
 }
