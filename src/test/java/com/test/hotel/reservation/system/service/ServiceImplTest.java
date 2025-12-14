@@ -20,4 +20,12 @@ public class ServiceImplTest {
         Assertions.assertThat(service.getRooms().size()).isEqualTo(2);
         Assertions.assertThat(service.getRooms().get(1).pricePerNight()).isEqualTo(1000);
     }
+
+    @Test
+    public void shouldTestSetUser(){
+        service.setUser(1, 5000);
+        service.setUser(2, 10000);
+        Assertions.assertThat(service.getUsers().size()).isEqualTo(2);
+        Assertions.assertThat(service.getUsers().get(1).balance()).isEqualTo(5000);
+    }
 }
