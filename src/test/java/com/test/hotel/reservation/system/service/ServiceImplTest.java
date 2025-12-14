@@ -1,0 +1,23 @@
+package com.test.hotel.reservation.system.service;
+
+import com.test.hotel.reservation.system.entities.RoomType;
+import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+public class ServiceImplTest {
+    private ServiceImpl service;
+    @BeforeEach
+    void setUp(){
+        service = new ServiceImpl();
+    }
+
+    @Test
+    public void shouldTestSetRoom(){
+        service.setRoom(1, RoomType.STANDARD, 1000);
+        service.setRoom(2, RoomType.JUNIOR, 2000);
+        service.setRoom(3, RoomType.MASTER, 3000);
+        Assertions.assertThat(service.getRooms().size()).isEqualTo(3);
+
+    }
+}
